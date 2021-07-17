@@ -1,0 +1,37 @@
+-- Configuração do Debugger no Vscode para o Adonis
+launch.json
+{
+  "name": "Debug",
+  "runtimeExecutable": "npm" || "yarn",
+  "runtimeArgs": ["run", "debug"],
+  "port": 9229,
+  "internalConsoleOptions": "neverOpen"
+}
+
+package.json
+scripts: {
+  "debug": "adonis serve --dev --debug"
+}
+
+-- Iniciando o desenvolvimento do projeto
+
+    1 - Iremos configurar o exception rundlers para tratarmos nossas exceptions
+          adonis make:ehandler
+
+    2 - Após o adonis criar nossa pasta de Exceptions com o arquivo Handler.js
+        Iremos configurar nossos logs, para o adonis fazer o report dos erros em txt
+        Importaremos o looger - const Logger = use('Logger')
+        Agora dentro do nosso metodo report iremos setar as configurações
+
+    3 - Na pasta config temos todos os arquivos de configurações do projeto
+        No arquivo app.js setar o seguinte
+          transport: 'file',
+          file: {
+                driver: 'file',
+                name: 'ecommerce-realtime',
+                filename: 'ecommerce-error.log',
+                level: 'info'
+              }
+
+    4 - Iremos iniciar o git no projeto
+        git init .
