@@ -34,4 +34,28 @@ scripts: {
               }
 
     4 - Iremos iniciar o git no projeto
-        git init .
+          git init .
+        Criando nossa branch develop
+          git checkout -b develop
+        Configurando nosso usuário
+          git config --global user.name ''
+          git config --global user.email ''
+        Adicionando a um repositório criado no github
+          git remote add origin git@github.com:alefwhite/AdonisJs_Ecommerce_Realtime.git
+        Fazendo o push para o repositório
+          git push -u origin --all
+
+    5 - Instalação dos pacotes com adonis
+        Envio de emails - adonis install @adonisjs/mail
+        Validação de rotas e formulários - adonis install @adonisjs/validator
+        Websocket - adonis install @adonisjs/websocket
+        Adonis Acl para configuração de permissões em middlewares -
+            adonis install adonis-acl - não funciona
+            yarn add adonis-acl
+        Após a instalação seguir a documentação para incluir as configurações
+        Depois das configurações executar - adonis acl:setup
+          Obs: ROLES = PAPEIS
+        Adonis Bumblebee - Provedor de transformador de API para a estrutura AdonisJs. Esta biblioteca fornece
+        uma camada de apresentação e transformação para saída de dados complexos.
+          adonis install adonis-bumblebee
+          yarn add
