@@ -60,5 +60,5 @@ scripts: {
           adonis install adonis-bumblebee
           yarn add
 
-
+    6 - Criação das migrations -> adonis make:migration nome_da_tabela
 
