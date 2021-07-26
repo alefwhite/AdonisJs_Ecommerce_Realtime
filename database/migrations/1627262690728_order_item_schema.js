@@ -13,7 +13,7 @@ class OrdemItemSchema extends Schema {
         .unsigned()
       table.decimal('subtotal', 12, 2)
       table.integer('order_id')
-        .unique()
+        .unsigned()
 
       table.foreign('product_id')
         .references('id')
