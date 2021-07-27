@@ -64,3 +64,6 @@ scripts: {
 
     7 - Criando um hook para Order
         adonis make:hook Order
+
+    8 - Criamos nossas factorys agora iremos criar nossos seeders
+        adonis make:seed
