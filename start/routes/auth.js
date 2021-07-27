@@ -22,13 +22,15 @@ Route.group(() => {
     Route.post('/logout', 'AuthController.logout')
       .as('auth.logout')
 
-    Route.post('/forgot', 'AuthController.forgot')
+
+    // Restore password routes
+    Route.post('/reset-password', 'AuthController.forgot')
       .as('auth.forgot')
 
-    Route.post('/remember', 'AuthController.remember')
+    Route.get('/reset-password', 'AuthController.remember')
       .as('auth.remember')
 
-    Route.post('/reset', 'AuthController.reset')
+    Route.put('/reset-password', 'AuthController.reset')
       .as('auth.reset')
 })
 .prefix('v1/auth')
