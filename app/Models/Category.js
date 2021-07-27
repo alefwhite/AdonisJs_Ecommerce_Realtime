@@ -6,7 +6,7 @@ const Model = use('Model')
 class Category extends Model {
   // Relacionamento entre Categoria e Imagem de destaque
   image () {
-    return this.belongsTo('App/Models/Image')
+    return this.hasOne('App/Models/Image')
   }
 
   // Relacionamento entre Categoria e Produtos

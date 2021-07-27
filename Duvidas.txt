@@ -67,3 +67,10 @@ scripts: {
 
     8 - Criamos nossas factorys agora iremos criar nossos seeders
         adonis make:seed
+
+    9 - Iremos deletar todas as nossas migrations e pedir para o adonis recrialas
+        adonis migration:refresh
+
+    10 - Rodando nossa seed
+        adonis seed
+

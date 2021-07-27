@@ -10,7 +10,7 @@
 |
 */
 
-  const Role = use('role')
+const Role = use('Role')
 
 class RoleSeeder {
   async run () {
