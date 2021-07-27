@@ -62,3 +62,5 @@ scripts: {
 
     6 - Criação das migrations -> adonis make:migration nome_da_tabela
 
+    7 - Criando um hook para Order
+        adonis make:hook Order
