@@ -8,14 +8,14 @@ class PasswordReset extends Model {
   static boot () {
     super.boot()
 
-    this.addHook('beforeCreate', async model => {
-      model.token = await str_random(25)
+    this.addHook('beforeCreate', async modelInstance => {
+      modelInstance.token = await str_random(25)
 
       const expires_at = new Date()
 
       expires_at.setMinutes(expires_at.getMinutes() + 30)
 
-      model.expires_at = expires_at
+      modelInstance.expires_at = expires_at
     })
   }
 
