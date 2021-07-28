@@ -75,13 +75,17 @@ scripts: {
         adonis seed
 
     11 - Criando a controller de autenticação para aprender a usar namespace na rota
-        adonis make:controller Auth/Auth
+          adonis make:controller Auth/Auth
 
-        Route.group(() => {
+          Route.group(() => {
 
-        })
-        .prefix('v1/auth')
-        .namespace('Auth') - Irá buscar em Controllers/Http/Auth
+          })
+          .prefix('v1/auth')
+          .namespace('Auth') - Irá buscar em Controllers/Http/Auth
 
-        para verificar as rotas criadas e as rotas nomeadas
-        adonis route:list
+          para verificar as rotas criadas e as rotas nomeadas
+          adonis route:list
+
+    12 - Criando controller do tipo resource
+          adonis make:controller Admin/Category --resource
+          adonis make:controller Admin/Product --resource --type http
