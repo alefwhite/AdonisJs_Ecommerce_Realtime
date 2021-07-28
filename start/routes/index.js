@@ -22,11 +22,17 @@ Route.get('/', () => {
 .as('home')
 
 /*
-*   Importa as rotas de autenticação
+*   Importa as rotas de Autenticação
 * */
 require('./auth')
 
 /*
-*   Importa as rotas de admin
+*   Importa as rotas de Admin
 * */
 require('./admin')
+
+
+/*
+*   Importa as rotas de Clientes
+* */
+require('./client')

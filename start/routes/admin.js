@@ -42,4 +42,4 @@ Route.group(() => {
     .apiOnly()
 })
 .prefix('v1/admin')
-.as('Admin')
+.namespace('Admin')
