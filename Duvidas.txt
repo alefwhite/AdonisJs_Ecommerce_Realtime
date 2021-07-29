@@ -89,3 +89,9 @@ scripts: {
     12 - Criando controller do tipo resource
           adonis make:controller Admin/Category --resource
           adonis make:controller Admin/Product --resource --type http
+
+    13 - Criando um middleware para paginação
+          adonis make:middleware Pagination
+
+          Depois temos que adiciona-lo no kernel
+            App/Middleware/Pagination
