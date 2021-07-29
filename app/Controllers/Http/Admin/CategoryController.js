@@ -66,12 +66,12 @@ class CategoryController {
    * @param {View} ctx.view
    */
   async show ({ params: { id }, request, response }) {
-    try {
-      const category = await Category.findOrFail(id)
+    const category = await Category.findOrFail(id)
 
+    try {
       return response.send(category)
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Algo deu errado ao listar categoria'
       })
     }
@@ -86,9 +86,9 @@ class CategoryController {
    * @param {Response} ctx.response
    */
   async update ({ params: { id }, request, response }) {
-    try {
-      const category = await Category.findOrFail(id)
+    const category = await Category.findOrFail(id)
 
+    try {
       const data = request.post()
 
       category.merge(data)
@@ -97,7 +97,7 @@ class CategoryController {
 
       return response.status(200).send(category)
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Algo deu errado ao editar categoria'
       })
     }
@@ -112,14 +112,14 @@ class CategoryController {
    * @param {Response} ctx.response
    */
   async destroy ({ params: { id }, request, response }) {
-    try {
-      const category = await Category.findOrFail(id)
+    const category = await Category.findOrFail(id)
 
+    try {
       await category.delete()
 
       return response.status(204).send()
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Algo deu errado ao deletar categoria'
       })
     }

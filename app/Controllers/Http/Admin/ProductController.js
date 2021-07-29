@@ -74,12 +74,12 @@ class ProductController {
    * @param {View} ctx.view
    */
   async show ({ params: { id }, request, response }) {
-    try {
-      const product = await Product.findOrFail(id)
+    const product = await Product.findOrFail(id)
 
+    try {
       return response.send(product)
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Não foi possível lista o produto neste momento'
       })
     }
@@ -94,9 +94,9 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async update ({ params: { id }, request, response }) {
-    try {
-      const product = await Product.findOrFail(id)
+    const product = await Product.findOrFail(id)
 
+    try {
       const data = request.only(['name', 'description', 'price', 'image_id'])
 
       product.merge(data)
@@ -105,7 +105,7 @@ class ProductController {
 
       return response.send(product)
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Não foi possível editar o produto neste momento'
       })
     }
@@ -120,14 +120,15 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async destroy ({ params: { id }, request, response }) {
+    const product = await Product.findOrFail(id)
+
     try {
-      const product = await Product.findOrFail(id)
 
       product.delete()
 
       return response.status(204).send()
     } catch (error) {
-      return response.status(400).send({
+      return response.status(500).send({
         message: 'Não foi possível deletar o produto neste momento'
       })
     }
