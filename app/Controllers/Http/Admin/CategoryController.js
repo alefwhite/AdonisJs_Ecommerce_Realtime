@@ -21,14 +21,14 @@ class CategoryController {
    * @param {object} ctx.pagination
    */
   async index ({ request, response, pagination }) {
-    // const { page, limit } = request.get()
-    // const categories = await Category
-    //   .query()
-    //   .paginate(page, limit)
+    const { title } = request.get()
 
-    const categories = await Category
-      .query()
-      .paginate(pagination.page, pagination.limit)
+    // criando uma instancia da model Category
+    const query = Category.query()
+
+    if (title) query.where('title', 'LIKE', `%${title}%`)
+
+    const categories = await query.paginate(pagination.page, pagination.limit)
 
     return response.send(categories)
   }
@@ -42,6 +42,18 @@ class CategoryController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    try {
+      const { title, description, image_id } = request.all()
+
+      const category = await Category.create({ title, description, image_id})
+
+      return response.status(201).send(category)
+
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Erro ao processar a sua solicitação'
+      })
+    }
   }
 
   /**
@@ -53,7 +65,16 @@ class CategoryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response }) {
+  async show ({ params: { id }, request, response }) {
+    try {
+      const category = await Category.findOrFail(id)
+
+      return response.send(category)
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Algo deu errado ao listar categoria'
+      })
+    }
   }
 
   /**
@@ -64,7 +85,22 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params: { id }, request, response }) {
+    try {
+      const category = await Category.findOrFail(id)
+
+      const data = request.post()
+
+      category.merge(data)
+
+      await category.save()
+
+      return response.status(200).send(category)
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Algo deu errado ao editar categoria'
+      })
+    }
   }
 
   /**
@@ -75,7 +111,18 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params: { id }, request, response }) {
+    try {
+      const category = await Category.findOrFail(id)
+
+      await category.delete()
+
+      return response.status(204).send()
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Algo deu errado ao deletar categoria'
+      })
+    }
   }
 }
 
