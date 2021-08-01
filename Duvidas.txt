@@ -98,3 +98,7 @@ scripts: {
 
 
     14 - Criando Helpers pasta App criaremos uma pasta Helpers e um arquivo index.js
+
+    15 - No terminal dentro da raiz do projeto podemos usar o adonis repl para testar
+         os helpers ou qualquer outra coisa
+
