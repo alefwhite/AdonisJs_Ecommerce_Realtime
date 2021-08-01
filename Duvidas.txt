@@ -95,3 +95,6 @@ scripts: {
 
           Depois temos que adiciona-lo no kernel
             App/Middleware/Pagination
+
+
+    14 - Criando Helpers pasta App criaremos uma pasta Helpers e um arquivo index.js
