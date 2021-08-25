@@ -102,3 +102,4 @@ scripts: {
     15 - No terminal dentro da raiz do projeto podemos usar o adonis repl para testar
          os helpers ou qualquer outra coisa
 
+
