@@ -23,6 +23,14 @@ Route.group(() => {
     .apiOnly()
 
   /*
+ *   Order Resource Rutes
+ * */
+  Route.post('orders/:id/discount', 'OrderController.applyDiscount')
+  Route.delete('orders/:id/discount', 'OrderController.removeDiscount')
+  Route.resource('orders', 'OrderController')
+    .apiOnly()
+
+  /*
   *   Images resource route
   * */
   Route.resource('orders', 'OrderController')
