@@ -102,4 +102,12 @@ scripts: {
     15 - No terminal dentro da raiz do projeto podemos usar o adonis repl para testar
          os helpers ou qualquer outra coisa
 
+    16 - Incluimos middlewares de autenticação e acl nas rotas
+        .middleware(['guest'])
+        .middleware(['auth', 'is: (admin || manager'])
 
+    17 - Segurança com validator
+         adonis make:validator Auth/Auth
+
+    18 - Incluindo validator nas rotas
+        .validator('Auth/Login')
