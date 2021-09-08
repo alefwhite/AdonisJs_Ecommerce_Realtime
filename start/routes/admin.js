@@ -5,10 +5,14 @@ const Route = use('Route')
 
 Route.group(() => {
   /*
-  *   Categories resource route
+  *   Categories resource route / adonis route:list | grep StoreCategory
   * */
   Route.resource('categories', 'CategoryController')
     .apiOnly()
+    .validator(new Map([
+      [['categories.store'],  ['Admin/StoreCategory']],
+      [['categories.update'], ['Admin/StoreCategory']]
+    ]))
 
   /*
   *   Products resource route

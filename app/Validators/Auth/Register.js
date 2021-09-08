@@ -7,7 +7,8 @@ class AuthRegister {
       name: 'required',
       surname: 'required',
       email: 'required|email|unique:users,email',
-      password: 'required|confirmed'
+      password: 'required|confirmed' // password_confirmation === password
+
     }
   }
 }
