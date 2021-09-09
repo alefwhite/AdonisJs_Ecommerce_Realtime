@@ -111,3 +111,8 @@ scripts: {
 
     18 - Incluindo validator nas rotas
         .validator('Auth/Login')
+
+    19 - Incluindo validator em rotas resource
+        .validator(new Map([
+          [['users.store'], ['Admin/StoreUser']]
+        ]))
