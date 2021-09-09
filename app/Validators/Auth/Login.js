@@ -5,8 +5,19 @@ class Login {
     return {
       // validation rules
       email: 'required|email',
-      password: 'return'
+      password: 'required'
     }
+  }
+
+  get messages () {
+    return {
+      'email.required': 'O e-mail é obrigatório!',
+      'password.required': 'A senha é obrigatória!'
+    }
+  }
+
+  get validateAll () {
+    return true
   }
 }
 
