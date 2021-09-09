@@ -33,6 +33,9 @@ Route.group(() => {
   Route.delete('orders/:id/discount', 'OrderController.removeDiscount')
   Route.resource('orders', 'OrderController')
     .apiOnly()
+    .validator(new Map([
+      [['orders.store'], ['Admin/StoreOrder']]
+    ]))
 
   /*
   *   Images resource route
