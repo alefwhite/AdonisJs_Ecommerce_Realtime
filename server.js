@@ -1,5 +1,7 @@
 'use strict'
 
+const http = require('http')
+
 /*
 |--------------------------------------------------------------------------
 | Http server
@@ -21,5 +23,7 @@ const { Ignitor } = require('@adonisjs/ignitor')
 
 new Ignitor(require('@adonisjs/fold'))
   .appRoot(__dirname)
-  .fireHttpServer()
+  .fireHttpServer((handler) => {
+    return http.createServer({}, handler)
+  })
   .catch(console.error)

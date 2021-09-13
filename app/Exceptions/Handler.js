@@ -50,6 +50,7 @@ class ExceptionHandler extends BaseExceptionHandler {
         name: error.name
       })
     }
+    console.log(error)
   }
 }
 
