@@ -145,9 +145,9 @@ class ImageController {
     try {
       let filepath = Helpers.publicPath(`uploads/${image.path}`)
 
-      await fs.unlink(filepath, async err => {
-          if (!err) await image.delete()
-      })
+      fs.unlinkSync(filepath)
+
+      await image.delete()
 
       return response.status(204).send()
     } catch (error) {
