@@ -26,6 +26,24 @@ class OrderController {
   async index ({ request, response, pagination }) {
     const { status, id } = request.only(['status', 'id'])
 
+    /*
+    *   const query = Order.query()
+    *
+    *   if  (status && id) {
+    *     query
+  *         .where('status', status)
+    *       .orWhere('id', 'LIKE', `%${id}%`)
+    *   } else if (status) {
+    *     query.where('status', status)
+    *   } else if (id) {
+    *     query.where('id', 'LIKE', `%${id}%`)
+    *   }
+    *
+    *   const orders = await query.paginate(pagination.page, pagination.limit)
+    *
+    *   return orders
+    * */
+
     const orders = await Order
       .query()
       .where(builder => {
