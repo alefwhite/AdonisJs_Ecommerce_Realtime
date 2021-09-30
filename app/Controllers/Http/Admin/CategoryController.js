@@ -17,7 +17,7 @@ class CategoryController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {TransformWith} ctx.transform
    * @param {object} ctx.pagination
    */
   async index ({ request, response, pagination, transform }) {
@@ -43,14 +43,15 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, transform }) {
     try {
       const { title, description, image_id } = request.all()
 
-      const category = await Category.create({ title, description, image_id})
+      let category = await Category.create({ title, description, image_id})
+
+      category = await transform.item(category, CategoryTransformer)
 
       return response.status(201).send(category)
-
     } catch (error) {
       return response.status(400).send({
         message: 'Erro ao processar a sua solicitação'
@@ -67,10 +68,12 @@ class CategoryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params: { id }, request, response }) {
-    const category = await Category.findOrFail(id)
+  async show ({ params: { id }, request, response, transform }) {
+    let category = await Category.findOrFail(id)
 
     try {
+      category = await transform.item(category, CategoryTransformer)
+
       return response.send(category)
     } catch (error) {
       return response.status(500).send({
@@ -87,8 +90,8 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params: { id }, request, response }) {
-    const category = await Category.findOrFail(id)
+  async update ({ params: { id }, request, response, transform }) {
+    let category = await Category.findOrFail(id)
 
     try {
       const data = request.post()
@@ -96,6 +99,8 @@ class CategoryController {
       category.merge(data)
 
       await category.save()
+
+      category = await transform.item(category, CategoryTransformer)
 
       return response.status(200).send(category)
     } catch (error) {
