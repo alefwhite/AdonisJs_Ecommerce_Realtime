@@ -116,3 +116,11 @@ scripts: {
         .validator(new Map([
           [['users.store'], ['Admin/StoreUser']]
         ]))
+
+    20 - Transformer - Utilizaremos para retornar a url das imagens dos produtos
+         Adonis Bumblebee - Provedor de transformador de API para a estrutura AdonisJs. Esta biblioteca fornece
+         uma camada de apresentação e transformação para saída de dados complexos.
+         adonis install adonis-bumblebee
+
+         Criando um Transformer
+         adonis make:transformer Admin/Category
