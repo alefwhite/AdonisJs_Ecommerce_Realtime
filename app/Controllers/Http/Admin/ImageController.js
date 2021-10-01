@@ -3,6 +3,7 @@
 const Image = use('App/Models/Image')
 const { manage_sigle_upload, manage_multiple_upload } = use('App/Helpers')
 const fs = use('fs')
+const ImageTransformer = use('App/Transformers/Admin/ImageTransformer')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,11 +22,13 @@ class ImageController {
    * @param {Response} ctx.response
    * @param {View} ctx.pagination
    */
-  async index ({ request, response, pagination }) {
-    const images = await Image
+  async index ({ request, response, pagination, transform }) {
+    let images = await Image
       .query()
       .orderBy('id', 'DESC')
       .paginate(pagination.page, pagination.limit)
+
+    images = await transform.paginate(images, ImageTransformer)
 
     return response.send(images)
   }
@@ -37,7 +40,7 @@ class ImageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, transform}) {
     try {
       // Captura uma image ou mais do request
       const fileJar = request.file('images', {
@@ -60,7 +63,10 @@ class ImageController {
             extension: file.subtype
           })
 
-          images.push(image)
+          // Transformação
+          const transformedImage = await transform.item(image, ImageTransformer)
+
+          images.push(transformedImage)
 
           return response.status(201).send({ successes: images, errors: {} })
         }
@@ -82,7 +88,9 @@ class ImageController {
             extension: file.subtype
           })
 
-          images.push(image)
+          const transformedImage = await transform.item(image, ImageTransformer)
+
+          images.push(transformedImage)
         })
       )
 
@@ -102,7 +110,9 @@ class ImageController {
    * @param {View} ctx.view
    */
   async show ({ params: { id }, request, response}) {
-    const image = await Image.findOrFail(id)
+    let image = await Image.findOrFail(id)
+
+    image = await transform.item(image, ImageTransformer)
 
     return response.send(image)
   }
@@ -116,13 +126,15 @@ class ImageController {
    * @param {Response} ctx.response
    */
   async update ({ params: { id }, request, response }) {
-    const image = await Image.findOrFail(id)
+    let image = await Image.findOrFail(id)
     try {
       const original_name = response.input('original_name')
 
       image.merge({ original_name })
 
       await image.save()
+
+      image = await transform.item(image, ImageTransformer)
 
       return response.status(200).send(image)
     } catch (error) {

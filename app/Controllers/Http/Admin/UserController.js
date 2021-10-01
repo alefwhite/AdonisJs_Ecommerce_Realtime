@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const User = use('App/Models/User')
+const UserTransformer = use('App/Transformers/Admin/UserTransformer')
 
 /**
  * Resourceful controller for interacting with users
@@ -19,10 +20,10 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, pagination }) {
+  async index ({ request, response, pagination, transform }) {
     const { name, surname, email} = request.get()
     try {
-      const users = await User
+      let users = await User
         .query()
         .where(builder => {
           if (name) builder.where('name', 'LIKE', `%${name}%`)
@@ -32,6 +33,8 @@ class UserController {
           if (email) builder.orWhere('email', 'LIKE', `%${email}%`)
         })
         .paginate(pagination.page, pagination.limit)
+
+      users = await transform.paginate(users, UserTransformer)
 
       return response.send(users)
     } catch (error) {
@@ -50,7 +53,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, transform }) {
     try {
       const data = request.only([
         'name',
@@ -60,7 +63,9 @@ class UserController {
         'image_id'
       ])
 
-      const user = await User.create(data)
+      let user = await User.create(data)
+
+      user = await transform.item(user, UserTransformer)
 
       return response.status(201).send(user)
     } catch (error) {
@@ -79,9 +84,11 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params: { id }, request, response}) {
-    const user = await User.findOrFail(id)
+  async show ({ params: { id }, request, response, transform}) {
+    let user = await User.findOrFail(id)
     try {
+      user = await transform.item(user, UserTransformer)
+
       return response.send(user)
     } catch (error) {
       return response.status(500).send({
@@ -98,14 +105,16 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params: { id }, request, response }) {
-    const user = await User.findOrFail(id)
+  async update ({ params: { id }, request, response, transform }) {
+    let user = await User.findOrFail(id)
     try {
       const data = request.post()
 
       user.merge(data)
 
       await user.save()
+
+      user = await transform.item(user, UserTransformer)
 
       return response.send(user)
     } catch (error) {
