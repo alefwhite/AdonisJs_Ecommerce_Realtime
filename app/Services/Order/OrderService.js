@@ -3,7 +3,7 @@
 const Database = use('Database')
 
 class OrderService {
-  constructor (Model, Trx = null) {
+  constructor (Model, Trx = false) {
     this.Model = Model
     this.Trx = Trx
   }
@@ -30,11 +30,13 @@ class OrderService {
       .delete(this.Trx)
 
     // Atualiza os valores e quantidade
-    await Promise.all(current_items.rows.map(async item => {
-      item.fill(items.find(n => n.id === item.id))
+    await Promise.all(
+      current_items.rows.map(async item => {
+        item.fill(items.find(n => n.id === item.id))
 
-      await item.save(this.Trx)
-    }))
+        await item.save(this.Trx)
+     })
+    )
   }
 
   async canApplyDiscount (coupon) {

@@ -6,7 +6,7 @@
 
 const Coupon = use('App/Models/Coupon')
 const Database = use('Database')
-const Service = use('App/Service/Coupon/CouponService')
+const CouponService = use('App/Service/Coupon/CouponService')
 const CouponTransformer = use('App/Transformers/Admin/CouponTransformer')
 
 
@@ -80,7 +80,7 @@ class CouponController {
       let coupon = await Coupon.create(couponData, trx)
 
       // starts service layer
-      const service = new Service(coupon, Trx)
+      const service = new CouponService(coupon, Trx)
 
       // insere os relacionamentos no DB
       if (users && users.length > 0) {
@@ -166,7 +166,7 @@ class CouponController {
 
       const { user, products } = request.post()
 
-      const service = new Service(coupon, Trx)
+      const service = new CouponService(coupon, Trx)
 
       // insere os relacionamentos no DB
       if (users && users.length > 0) {

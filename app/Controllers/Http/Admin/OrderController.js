@@ -6,7 +6,7 @@
 
 const Order = use('App/Models/Order')
 const Database = use('Database')
-const Service = use('App/Services/Order/OrderService')
+const OrderService = use('App/Services/Order/OrderService')
 const Coupon = use('App/Models/Coupon')
 const Discount = use('App/Models/Discount')
 const OrderTransformer = use('App/Transformers/Admin/OrderTransformer')
@@ -83,7 +83,7 @@ class OrderController {
 
       let order = await Order.create({ user_id, status }, Trx)
 
-      const service = new Service(order, trx)
+      const service = new OrderService(order, Trx)
 
       if (items && items.length > 0) {
         await service.syncItems(items)
@@ -91,7 +91,9 @@ class OrderController {
 
       await Trx.commit()
 
-      order = await transform.item(order, OrderTransformer)
+      order = await Order.find(order.id)
+
+      order = await transform.include('user, items').item(order, OrderTransformer)
 
       return response.status(201).send(order)
     } catch (error) {
@@ -134,7 +136,7 @@ class OrderController {
 
       order.merge({ user_id, status })
 
-      const service = new Service(order, Trx)
+      const service = new OrderService(order, Trx)
 
       await service.updateItems(items)
 
@@ -142,7 +144,9 @@ class OrderController {
 
       await Trx.commit()
 
-      order = await transform.item(order, OrderTransformer)
+      order = await transform
+        .include('items, user, discounts, coupons')
+        .item(order, OrderTransformer)
 
       return response.send(order)
     } catch (error) {
