@@ -17,7 +17,8 @@ class OrderSchema extends Schema {
         'shipped',
         'paid',
         'fineshed'
-      ])
+      ]).defaultTo('pending')
+
       table.timestamps()
 
       table.foreign('user_id')
