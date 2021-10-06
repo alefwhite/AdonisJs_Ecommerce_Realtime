@@ -16,17 +16,17 @@ class ProductTransformer extends BumblebeeTransformer {
   /**
    * This method is used to transform the data.
    */
-  transform (model) {
+  transform (product) {
     return {
-      id: model.id,
-      name: model.name,
-      description: model.description,
-      price: model.price
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price
     }
   }
 
-  includeImage (model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
+  includeImage (product) {
+    return this.item(product.getRelated('image'), ImageTransformer)
   }
 }
 

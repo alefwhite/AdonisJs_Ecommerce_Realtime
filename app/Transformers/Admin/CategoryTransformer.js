@@ -17,17 +17,17 @@ class CategoryTransformer extends BumblebeeTransformer {
   /**
    * This method is used to transform the data.
    */
-  transform (model) {
+  transform (category) {
     return {
      // add your transformation object here
-      id: model.id,
-      title: model.title,
-      description: model.description
+      id: category.id,
+      title: category.title,
+      description: category.description
     }
   }
 
-  includeImage (model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
+  includeImage (category) {
+    return this.item(category.getRelated('image'), ImageTransformer)
   }
 }
 

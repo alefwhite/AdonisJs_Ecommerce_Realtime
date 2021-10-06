@@ -16,18 +16,18 @@ class UserTransformer extends BumblebeeTransformer {
   /**
    * This method is used to transform the data.
    */
-  transform (model) {
+  transform (user) {
     return {
      // add your transformation object here
-      id: model.id,
-      name: model.name,
-      surname: model.surname,
-      email: model.email
+      id: user.id,
+      name: user.name,
+      surname: user.surname,
+      email: user.email
     }
   }
 
-  includeImage (model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
+  includeImage (user) {
+    return this.item(user.getRelated('image'), ImageTransformer)
   }
 }
 
